@@ -23,6 +23,18 @@ export const createUser = async (req,res)=>{
         res.status(400)
     }
 }
+export const getSingleUser = async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const [result] = await pool.query(`
+        SELECT * FROM users WHERE id = ?
+        `, id)
+        res.status(200).json(result)
+    }catch(error){
+        console.log(error)
+        res.status(400).json({error: "Failed to get single user" });
+    }
+}
 export const deleteUser = async (req, res) => {
     try {
         const id = req.params.id;
